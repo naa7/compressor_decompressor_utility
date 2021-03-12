@@ -2,8 +2,8 @@
 
 ![Open Source Love](https://badges.frapsoft.com/os/v3/open-source.svg?v=103) <img src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg"> <img src="https://img.shields.io/github/stars/naa7/compressor_decompressor_utility?style=social"> <img src="https://img.shields.io/github/repo-size/naa7/compressor_decompressor_utility"> [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/naa7/compressor_decompressor_utility/LICENSE)
 
-<img src="">
-<img src=""></br> 
+<img src="https://github.com/naa7/compressor_decompressor_utility/blob/main/file_compressor.gif">
+<img src="https://github.com/naa7/compressor_decompressor_utility/blob/main/file_decompressor.gif"></br> 
 
 The idea of this project is to make a file compressor/decompressor which automates file (de)compression. Supported file extensions
 are `tar`, `gz`, `bz2`, and `zip`. When compressing files, the user is given the option to select preferred compression method or
