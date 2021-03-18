@@ -24,6 +24,13 @@ function main {
 	then
 		compressor
 		echo "----- Finished Compressing -----" && sleep 1.5 
+	
+	elif [[ $choice == 'Q' || $choice == 'q' ]]
+	then
+		clear
+		echo -e "-----  Program Exit!  -----" && sleep 1		
+		clear && exit 0
+
 	else
 		echo "Error, Program Exit!"
 		exit 1
@@ -31,6 +38,7 @@ function main {
 
 	clear && echo -n "Do you want to rename extracted file?(Y/n): "
 	read answer
+
 	if [[ $answer == 'Y' ]] || [[ $answer == 'y' ]]
 	then
 		echo -n "Enter new name: "
@@ -55,6 +63,7 @@ function main {
 		totalTime3=$(bc <<< "60*($totalTime1-$totalTime2)")
 		totalTime3=${totalTime3%.*}
 		TIME="${totalTime2}.${totalTime3} minutes"
+
 	else
 		TIME="${totalTime} seconds"
 	fi
@@ -66,6 +75,7 @@ function main {
 	if [[ $choice == 'D' || $choice == 'd' ]]
 	then
 		echo "Number & Time of Decompressions:"
+
 	else
 		echo "Number & Time of Compressions:"
 	fi
@@ -80,6 +90,7 @@ function main {
 	if [[ $choice == 'D' || $choice == 'd' ]]
 	then
 		echo "Total decompressions: $totalCounter"
+
 	else
 		echo "Total compressions: $totalCounter"
 	fi
@@ -102,36 +113,66 @@ function compressor {
 	while [[ true ]]
 	do
 		clear
-		echo "===================================="
-		echo "-----------  FILES LIST  -----------"
-		echo "===================================="
+		echo "======================================="
+		echo "------------  FILES LIST  -------------"
+		echo "======================================="
 		ls -p --color | grep -v /
 		#file * | grep 'gzip\|bzip\|Zip\|POSIX' | sed 's/:.*//'
-		echo "===================================="
-		echo "-------   ENTER [q] TO EXIT  -------"
-		echo "===================================="
-		echo -n "Enter name of file or [q]uit: "
-		read input && clear
+		echo "======================================="
+		echo "--------  ENTER [q] TO EXIT  ----------"
+		echo "======================================="
+		echo "Note: either full name or a few letters "
+		echo -n "Enter file name, [R]eturn: "
+		read INPUT
 
+		if [[ $INPUT == 'q' || $INPUT == 'Q' ]]
+		then
+			clear && echo -e "-----  Program Exit!  -----" && sleep 1		
+			clear && exit 0	
+
+		elif [[ $INPUT == 'R' || $INPUT == 'r' ]]
+		then
+			main
+			exit 0			
+		fi
+
+		input=($INPUT*)
+		
 		#if [[ $(ls -A | grep $input) ]]
 		if [[ -f $input ]]
 		then
-			clear && break
+			echo -ne "\033[A\033[K"
+			echo -ne "\033[A\033[KYou selected $input, ([Y]es/[N]o): "
+			read confirmation
 
-		elif [[ $input == 'q' || $input == 'Q' ]]
-		then
-			echo -e "-----  Program Exit!  -----" && sleep 1		
-			clear && exit 0	
+			if [[ $confirmation == 'Y' || $confirmation == 'y' || $confirmation == 'Yes'  || $confirmation == 'yes' ]]
+			then
+				clear && break
+
+			elif [[ $confirmation == 'N' || $confirmation == 'n' || $confirmation == 'No' || $confirmation == 'no' ]]
+			then
+				clear
+
+			else
+				clear && echo "-----  Error, Wrong Entry!  -----" && sleep 1 && clear
+			fi
 
 		else
-			echo -e "-----  Error, File Not Found!  -----" && sleep 1 && clear
+			clear && echo -e "-----  Error, File Not Found!  -----" && sleep 1 && clear
 		fi
 	done
 
 	while [[ true ]]
 	do
-		echo -e "Compression type:\n[1] gzip  -  [2] bzip2  -  [3] tar  - [4] zip  - [5] random"
-		echo -n "Enter compression type number or [q]uit: "
+		echo "======================================="
+		echo "---------  COMPRESSION TYPES  ---------"
+		echo "======================================="
+		echo "[1] gzip      [2] bzip2      [3] tar"
+		echo "[4] zip       [5] random"
+		echo "======================================="
+		echo "---------  ENTER [q] TO EXIT  ---------"
+		echo "======================================="		
+		echo -n "Enter compression type number: "
 		read compression_type
 			
 		if [[ $compression_type -ge 1 && $compression_type -le 5 ]]
@@ -141,16 +182,16 @@ function compressor {
 		else
 			if [[ $compression_type == 'Q' || $compression_type == 'q' ]]
 			then
-				clear
-				echo -e "-----  Program Exit!  -----" && sleep 1 && clear		
+				clear && echo -e "-----  Program Exit!  -----" && sleep 1 && clear		
 				exit 0
+
 			else
 				echo -e "\n-----  Error, Wrong Entry!  -----" && sleep 1 && clear
 			fi
 		fi
 	done
 
-	echo -n "Enter nubmer of times to compress or [q]uit: "
+	echo -ne "\033[A\033[KEnter nubmer of times to compress: "
 	read counter
 	
 	if [[ $counter == 'Q' || $counter == 'q' ]]
@@ -185,9 +226,11 @@ function compressor {
 		echo -ne "Please, wait! Compressing -\033[A\r" && sleep 0.05
 		echo -ne "Please, wait! Compressing \\033[A\r" && sleep 0.05
 		echo -ne "Please, wait! Compressing |\033[A\r" && sleep 0.05
+		
 		if [[ $compression_type == 5 ]]
 		then
 			type="$(shuf -i 1-4 -n 1)"
+
 		else
 			type=$compression_type
 		fi
@@ -236,35 +279,59 @@ decompressor() {
 	while [[ true ]]
 	do
 		clear
-		echo "===================================="
-		echo "-----------  FILES LIST  -----------"
-		echo "===================================="
+		echo "======================================="
+		echo "------------  FILES LIST  -------------"
+		echo "======================================="
 
 		#ls -p | grep -v /
 		if ! [[ $(file * | grep 'gzip\|bzip\|Zip\|POSIX' | sed 's/:.*//') ]]
 		then
 			echo -e "\n   EMPTY, No Files to Decompress\n"
 		else
-			file * | grep 'gzip\|bzip\|Zip\|POSIX' | sed 's/:.*//'
+			ls --color $(file * | grep 'gzip\|bzip\|Zip\|POSIX' | sed 's/:.*//')
 		fi
 
-		echo "===================================="
-		echo "-------   ENTER [q] TO EXIT  -------"
-		echo "===================================="
-		echo -n "Enter file name or [q]uit: "
-		read input && clear
+		echo "======================================="
+		echo "--------  ENTER [q] TO EXIT  ----------"
+		echo "======================================="
+		echo "Note: either full name or a few letters "
+		echo -n "Enter file name, [R]eturn: "
+		read INPUT
 
-		if [[ -f $input ]]
+		if [[ $INPUT == 'q' || $INPUT == 'Q' ]]
 		then
-			clear && break
-
-		elif [[ $input == 'q' || $input == 'Q' ]]
-		then
-			echo -e "---------  Program Exit!  ---------" && sleep 1		
+			clear && echo -e "-----  Program Exit!  -----" && sleep 1		
 			clear && exit 0	
 
+		elif [[ $INPUT == 'R' || $INPUT == 'r' ]]
+		then
+			main
+			exit 0			
+		fi
+
+		input=($INPUT*)
+		
+		#if [[ $(ls -A | grep $input) ]]
+		if [[ -f $input ]]
+		then
+			echo -ne "\033[A\033[K"
+			echo -ne "\033[A\033[KYou selected $input, ([Y]es/[N]o): "
+			read confirmation
+
+			if [[ $confirmation == 'Y' || $confirmation == 'y' || $confirmation == 'Yes'  || $confirmation == 'yes' ]]
+			then
+				clear && break
+
+			elif [[ $confirmation == 'N' || $confirmation == 'n' || $confirmation == 'No' || $confirmation == 'no' ]]
+			then
+				clear
+
+			else
+				clear && echo "-----  Error, Wrong Entry!  -----" && sleep 1 && clear
+			fi
+
 		else
-			echo -e "-----  Error, File Not Found!  -----" && sleep 1 && clear
+			clear && echo -e "-----  Error, File Not Found!  -----" && sleep 1 && clear
 		fi
 	done
 
