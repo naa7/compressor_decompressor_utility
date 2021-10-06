@@ -1,4 +1,4 @@
-# compressor_decompressor_utility
+# ressor_utility
 
 ![Open Source Love](https://badges.frapsoft.com/os/v3/open-source.svg?v=103) <img src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg"> <img src="https://img.shields.io/github/stars/naa7/compressor_decompressor_utility?style=social"> <img src="https://img.shields.io/github/repo-size/naa7/compressor_decompressor_utility"> [![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)](https://github.com/naa7/compressor_decompressor_utility/LICENSE)
 
@@ -15,22 +15,22 @@ of program, user is given the option to change the name of the file. At the end,
 
 ## To run the program:
 
-    $ cd && git clone https://github.com/naa7/compressor_decompressor_utility.git
+    $ cd && git clone https://github.com/naa7/ressor_utility.git
 
-    $ cd compressor_decompressor_utility/
+    $ cd ressor_utility/
 
-    $ chmod +x compressor_decompressor_utility.sh && ./compressor_decompressor_utility.sh
+    $ chmod +x ressor_utility.sh && ./ressor_utility.sh
 
 ## Optional
 
 For easier use of the timer without the need to navigate to its directory and run the file,
 
-copy `compressor_decompressor_utility.sh` file to `/usr/bin/` folder:
+copy `ressor_utility.sh` file to `/usr/bin/` folder:
 
-    $ mv compressor_decompressor_utility.sh compressor_decompressor_utility    
+    $ mv ressor_utility.sh ressor_utility    
 
-    $ sudo cp compressor_decompressor_utility /usr/bin/
+    $ sudo cp ressor_utility /usr/bin/
 
 Now, you can either open it from terminal
 
-    $ compressor_decompressor_utility
+    $ ressor_utility
