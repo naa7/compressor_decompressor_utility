@@ -5,7 +5,7 @@
 <img src="https://github.com/naa7/compressor_decompressor_utility/blob/main/Compressor.gif">
 <img src="https://github.com/naa7/compressor_decompressor_utility/blob/main/Decompressor.gif"></br> 
 
-The idea of this project is to make a file compressor/decompressor which automates file (de)compression. Supported file extensions
+The idea of this project is to make a file, compressor/decompressor, which automates file (de)compression. Supported file extensions
 are `tar`, `gz`, `bz2`, and `zip`. When compressing files, the user is given the option to select preferred compression method or
 select a random compression method which is selected by the program itself. Also, the user is given the option of selecting how many
 times they want the file to be compressed. For example, a user can select `tar` compression method and `50` times of file compression.
