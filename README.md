@@ -10,7 +10,7 @@ are `tar`, `gz`, `bz2`, and `zip`. When compressing files, the user is given the
 select a random compression method which is selected by the program itself. Also, the user is given the option of selecting how many
 times they want the file to be compressed. For example, a user can select `tar` compression method and `50` times of file compression.
 For decompressing files, the user is prompted to enter the name of the file to be decompressed and then process is automated. Then 
-user is given the option to change the name of the file. At the end, user is given a summary showing number and time of(de)compressions
+user is given the option to change the name of the file. At the end, user is given a summary showing number and time of (de)compressions 
 and (de)compressed file name.
 
 ## To run the program:
