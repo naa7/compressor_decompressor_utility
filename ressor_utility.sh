@@ -6,29 +6,29 @@ bzip2Counter=0
 tarCounter=0
 zipCounter=0
 
-function main {	
-	
+function main {
+
 	clear
-	echo "========================================================="
-	echo "---------------- [De]/Compressor Utility ----------------"
-	echo "========================================================="
-	echo -n "Do you want to [D]ecompress or [C]ompress a file?(D/c): "
+	echo "======================================================="
+	echo "-------------------- Ressor Utility -------------------"
+	echo "======================================================="
+	echo -n "Do you want to [D]ecompress or [C]ompress file?(D/c): "
 	read choice
 
 	if [[ $choice == 'D' || $choice == 'd' ]]
 	then
 		decompressor
-		echo "----- Finished Decompressing -----" && sleep 1.5 
+		echo "----- Finished Decompressing -----" && sleep 1.5
 
 	elif [[ $choice == 'C' || $choice == 'c' ]]
 	then
 		compressor
-		echo "----- Finished Compressing -----" && sleep 1.5 
-	
+		echo "----- Finished Compressing -----" && sleep 1.5
+
 	elif [[ $choice == 'Q' || $choice == 'q' ]]
 	then
 		clear
-		echo -e "-----  Program Exit!  -----" && sleep 1		
+		echo -e "-----  Program Exit!  -----" && sleep 1
 		clear && exit 0
 
 	else
@@ -36,7 +36,7 @@ function main {
 		exit 1
 	fi
 
-	clear && echo -n "Do you want to rename extracted file?(Y/n): "
+	clear && echo -n "Do you want to rename file?(Y/n): "
 	read answer
 
 	if [[ $answer == 'Y' ]] || [[ $answer == 'y' ]]
@@ -48,9 +48,9 @@ function main {
 	fi
 
 	mv * ../ && cd ../ && rm -rf $directory && clear
-	
+
 	totalCounter=$((gzipCounter+bzip2Counter+tarCounter+zipCounter))
-	
+
 	# Bash can't handle floats. You need to use bc instead
 	# scale=2 -> two decimal precision. 1000000000 -> Nanosecond (10^9)
 	totalTime=$(bc <<< "scale=0;($time2-$time1)/1000000000")
@@ -71,7 +71,7 @@ function main {
 	echo "================================="
 	echo "             SUMMARY             "
 	echo "================================="
-	
+
 	if [[ $choice == 'D' || $choice == 'd' ]]
 	then
 		echo "Number & Time of Decompressions:"
@@ -86,7 +86,7 @@ function main {
 	echo "tar:   $tarCounter"
 	echo "zip:   $zipCounter"
 	echo "---------------------------------"
-	
+
 	if [[ $choice == 'D' || $choice == 'd' ]]
 	then
 		echo "Total decompressions: $totalCounter"
@@ -127,17 +127,17 @@ function compressor {
 
 		if [[ $INPUT == 'q' || $INPUT == 'Q' ]]
 		then
-			clear && echo -e "-----  Program Exit!  -----" && sleep 1		
-			clear && exit 0	
+			clear && echo -e "-----  Program Exit!  -----" && sleep 1
+			clear && exit 0
 
 		elif [[ $INPUT == 'R' || $INPUT == 'r' ]]
 		then
 			main
-			exit 0			
+			exit 0
 		fi
 
 		input=($INPUT*)
-		
+
 		#if [[ $(ls -A | grep $input) ]]
 		if [[ -f $input ]]
 		then
@@ -171,10 +171,10 @@ function compressor {
 		echo "[4] zip       [5] random"
 		echo "======================================="
 		echo "---------  ENTER [q] TO EXIT  ---------"
-		echo "======================================="		
+		echo "======================================="
 		echo -n "Enter compression type number: "
 		read compression_type
-			
+
 		if [[ $compression_type -ge 1 && $compression_type -le 5 ]]
 		then
 			break
@@ -182,7 +182,7 @@ function compressor {
 		else
 			if [[ $compression_type == 'Q' || $compression_type == 'q' ]]
 			then
-				clear && echo -e "-----  Program Exit!  -----" && sleep 1 && clear		
+				clear && echo -e "-----  Program Exit!  -----" && sleep 1 && clear
 				exit 0
 
 			else
@@ -193,15 +193,15 @@ function compressor {
 
 	echo -ne "\033[A\033[KEnter nubmer of times to compress: "
 	read counter
-	
+
 	if [[ $counter == 'Q' || $counter == 'q' ]]
 	then
 		clear
-		echo -e "-----  Program Exit!  -----" && sleep 1 && clear		
+		echo -e "-----  Program Exit!  -----" && sleep 1 && clear
 		exit 0
-	
+
 	elif [[ $counter == "" ]]
-	then 
+	then
 		counter=1
 	fi
 
@@ -215,7 +215,7 @@ function compressor {
 
 	name="$input"
 	clear
-	
+
 	# %H -> Hour, %M -> Minute, %S -> Second, %N -> convert time to Nanoseconds
 	time1=$(date +%H%M%S%N)
 
@@ -226,7 +226,7 @@ function compressor {
 		echo -ne "Please, wait! Compressing -\033[A\r" && sleep 0.05
 		echo -ne "Please, wait! Compressing \\033[A\r" && sleep 0.05
 		echo -ne "Please, wait! Compressing |\033[A\r" && sleep 0.05
-		
+
 		if [[ $compression_type == 5 ]]
 		then
 			type="$(shuf -i 1-4 -n 1)"
@@ -234,7 +234,7 @@ function compressor {
 		else
 			type=$compression_type
 		fi
-		
+
 		if [[ $type == 1 ]]
 		then
 			gzip -q $input
@@ -265,10 +265,10 @@ function compressor {
 			mv $input $name
 			zipCounter=$((zipCounter+1))
 		fi
-		
+
 		input=$name
 	done
-	
+
 	time2=$(date +%H%M%S%N)
 
 }
@@ -300,17 +300,17 @@ decompressor() {
 
 		if [[ $INPUT == 'q' || $INPUT == 'Q' ]]
 		then
-			clear && echo -e "-----  Program Exit!  -----" && sleep 1		
-			clear && exit 0	
+			clear && echo -e "-----  Program Exit!  -----" && sleep 1
+			clear && exit 0
 
 		elif [[ $INPUT == 'R' || $INPUT == 'r' ]]
 		then
 			main
-			exit 0			
+			exit 0
 		fi
 
 		input=($INPUT*)
-		
+
 		#if [[ $(ls -A | grep $input) ]]
 		if [[ -f $input ]]
 		then
@@ -342,10 +342,10 @@ decompressor() {
 	else
 		mkdir $directory && cp $input $directory/ && cd $directory/
 	fi
-	
+
 	name="$input"
 	time1=$(date +%H%M%S%N)
-	
+
 	while [[ true ]]
 	do
 		echo -ne "Please, wait! Decompressing /\033[A\r" && sleep 0.05
