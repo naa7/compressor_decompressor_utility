@@ -1,6 +1,6 @@
 #!/bin/bash
 
-directory=compressor_decompressor_temp_dir
+directory=ressor_utility
 gzipCounter=0
 bzip2Counter=0
 tarCounter=0
@@ -393,6 +393,7 @@ decompressor() {
 
 	time2=$(date +%H%M%S%N)
 
+	name="$(echo $name | sed 's/.zip*//' | sed 's/.gz*//' | sed 's/.tar*//' | sed 's/.bzip2*//')"
 	mv $input $name 2>/dev/null
 	input=$name
 
