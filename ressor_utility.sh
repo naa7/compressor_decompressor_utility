@@ -222,11 +222,11 @@ function compressor {
 	#for i in $(eval echo "{1..$flag}") // this for loop works the same and the latter
 	for i in $(seq 1 $counter)
 	do
-		echo -ne "Please, wait! Compressing /\033[A\r" && sleep 0.05
-		echo -ne "Please, wait! Compressing -\033[A\r" && sleep 0.05
-		echo -ne "Please, wait! Compressing \\033[A\r" && sleep 0.05
-		echo -ne "Please, wait! Compressing |\033[A\r" && sleep 0.05
-
+		#echo -ne "Please, wait! Compressing /\033[A\r" && sleep 0.04
+		#echo -ne "Please, wait! Compressing -\033[A\r" && sleep 0.04
+		#echo -ne "Please, wait! Compressing \\033[A\r" && sleep 0.04
+		#echo -ne "Please, wait! Compressing |\033[A\r" && sleep 0.04
+		echo -ne "Compressing...\033[A\r"
 		if [[ $compression_type == 5 ]]
 		then
 			type="$(shuf -i 1-4 -n 1)"
@@ -348,11 +348,11 @@ decompressor() {
 
 	while [[ true ]]
 	do
-		echo -ne "Please, wait! Decompressing /\033[A\r" && sleep 0.05
-		echo -ne "Please, wait! Decompressing -\033[A\r" && sleep 0.05
-		echo -ne "Please, wait! Decompressing \\033[A\r" && sleep 0.05
-		echo -ne "Please, wait! Decompressing |\033[A\r" && sleep 0.05
-
+		#echo -ne "Please, wait! Decompressing /\033[A\r" && sleep 0.04
+		#echo -ne "Please, wait! Decompressing -\033[A\r" && sleep 0.04
+		#echo -ne "Please, wait! Decompressing \\033[A\r" && sleep 0.04
+		#echo -ne "Please, wait! Decompressing |\033[A\r" && sleep 0.04
+		echo -ne "Decompressing...\033[A\r"
 		type=$(file $input)
 		out="$(echo $type | sed 's/,.*//' | sed 's/.*: //' | sed 's/\s.*//')"
 
