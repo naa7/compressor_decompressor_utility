@@ -167,7 +167,7 @@ function compressor {
 		echo "======================================="
 		echo "---------  COMPRESSION TYPES  ---------"
 		echo "======================================="
-		echo "[1] gzip      [2] bzip2      [3] tar"
+		echo "[1] gzip      [2] tar        [3] bzip2"
 		echo "[4] zip       [5] random"
 		echo "======================================="
 		echo "---------  ENTER [q] TO EXIT  ---------"
@@ -244,18 +244,19 @@ function compressor {
 
 		elif [[ $type == 2 ]]
 		then
-			bzip2 -q $input
-			input="$(ls -A | grep *.bz2)"
-			mv $input $name
-			bzip2Counter=$((bzip2Counter+1))
-
-		elif [[ $type == 3 ]]
-		then
 			tar cf $input.tar $input
 			rm $input
 			input="$(ls -A | grep *.tar)"
 			mv $input $name
 			tarCounter=$((tarCounter+1))
+
+		elif [[ $type == 3 ]]
+		then
+			bzip2 -q $input
+			input="$(ls -A | grep *.bz2)"
+			mv $input $name
+			bzip2Counter=$((bzip2Counter+1))
+
 
 		elif [[ $type == 4 ]]
 		then
@@ -363,13 +364,6 @@ decompressor() {
 			gzip -q -d out.gz
 			gzipCounter=$((gzipCounter+1))
 
-		elif [[ $out == "bzip2" ]];
-		then
-			mv $input out.bz2
-			bzip2 -q -d out.bz2
-			input=out
-			bzip2Counter=$((bzip2Counter+1))
-
 
 		elif [[ $out == "POSIX" ]];
 		then
@@ -377,6 +371,14 @@ decompressor() {
 			input=$(tar -xvf out.tar)
 			rm out.tar
 			tarCounter=$((tarCounter+1))
+
+
+		elif [[ $out == "bzip2" ]];
+		then
+			mv $input out.bz2
+			bzip2 -q -d out.bz2
+			input=out
+			bzip2Counter=$((bzip2Counter+1))
 
 
 		elif [[ $out == "Zip" ]];
